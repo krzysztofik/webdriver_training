@@ -1,0 +1,22 @@
+### Ignore Gradle files
+.gradle
+.gradle/
+
+### Ignore Jetbrains IDEA files
+# all *.iml files
+*.iml
+*s101*
+*.ipr
+*.iws
+# all folders with .idea
+.idea
+# all .pmd files
+*.pmd
+infinitest*
+/out
+
+# Ignore artifacts
+bin/
+buildSrc/
+build/
+target/
