@@ -1,5 +1,28 @@
-apply plugin: 'java'
+
+apply from: "libraries.gradle"
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2'
+}
+
+allprojects {
+
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    compileJava {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+        options.encoding = 'UTF-8'
+        options.compilerArgs = ['-XDignore.symbol.file']
+    }
+
+    compileTestJava {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+        options.encoding = 'UTF-8'
+    }
 }
