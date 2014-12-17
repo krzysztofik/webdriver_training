@@ -12,7 +12,7 @@ public class NavigateToUrl {
         WebDriver driver = new FirefoxDriver();
         driver.get("http://www.google.com");
         WebElement searchBox = driver.findElement(By.name("q"));
-        searchBox.sendKeys(Keys.chord(Keys.SHIFT,"webdriver"));
+        searchBox.sendKeys(Keys.chord(Keys.SHIFT, "webdriver"));
         searchBox.submit();
     }
 }

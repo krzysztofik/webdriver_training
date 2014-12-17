@@ -4,12 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,38 +16,29 @@ import static org.hamcrest.core.Is.is;
 
 public class AdvancedInteractions {
 
-    WebDriver driver;
-    URL resource_selectable;
-    URL resource_sortable;
-    URL resource_drag;
-    URL resource_dragAndDrop;
-    URL resource_doubleClick;
-    URL resource_contextClick;
+    WebDriver fireforDriver;
+    WebDriver chromeDriver;
 
     @Before
-    public void before() {
-        driver = new FirefoxDriver();
-        resource_selectable = getClass().getResource("/selectable.html");
-        resource_sortable = getClass().getResource("/Sortable.html");
-        resource_drag = getClass().getResource("/DragMe.html");
-        resource_doubleClick = getClass().getResource("/DoubleClick.html");
-        resource_contextClick = getClass().getResource("/ContextClick.html");
+    public void instantiateWebDriver() {
+        fireforDriver = new FirefoxDriver();
     }
 
     @After
-    public void after() {
-        driver.quit();
+    public void quiteWebDriver() {
+        fireforDriver.quit();
     }
 
     @Test
-    public void actionBuildPerform() throws URISyntaxException {
-
-        driver.get(Paths.get(resource_selectable.toURI()).toString());
-        WebElement one = driver.findElement(By.name("one"));
-        WebElement three = driver.findElement(By.name("three"));
-        WebElement five = driver.findElement(By.name("five"));
+    public void actionBuildPerform() throws URISyntaxException, InterruptedException {
+        //it does not work for firefox so used chrome instead
+        chromeDriver = new ChromeDriver();
+        chromeDriver.get(getClass().getResource("/selectable.html").toString());
+        WebElement one = chromeDriver.findElement(By.name("one"));
+        WebElement three = chromeDriver.findElement(By.name("three"));
+        WebElement five = chromeDriver.findElement(By.name("five"));
         // Add all the actions into the Actions builder.
-        Actions builder = new Actions(driver);
+        Actions builder = new Actions(chromeDriver);
         builder.keyDown(Keys.CONTROL)
                 .click(one)
                 .click(three)
@@ -58,20 +48,21 @@ public class AdvancedInteractions {
         Action compositeAction = builder.build();
         // Perform the composite action.
         compositeAction.perform();
+        Thread.sleep(3000);
+        chromeDriver.quit();
     }
 
     @Test
     public void moveToElementAndClickOrMoveByOffsetAndClick() throws URISyntaxException, InterruptedException {
-
-        driver.get(Paths.get(resource_selectable.toURI()).toString());
-        WebElement three = driver.findElement(By.name("three"));
-        WebElement twelve = driver.findElement(By.name("twelve"));
-        Actions moveToElementBuilder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/selectable.html").toString());
+        WebElement three = fireforDriver.findElement(By.name("three"));
+        WebElement twelve = fireforDriver.findElement(By.name("twelve"));
+        Actions moveToElementBuilder = new Actions(fireforDriver);
         moveToElementBuilder.moveToElement(three);
         moveToElementBuilder.click();
         moveToElementBuilder.perform();
 
-        Actions moveByOffsetBuilder = new Actions(driver);
+        Actions moveByOffsetBuilder = new Actions(fireforDriver);
         moveByOffsetBuilder.moveByOffset(three.getSize().getWidth(), three.getSize().getHeight() * 2).click();
         moveByOffsetBuilder.perform();
         assertThat(twelve.getAttribute("class"), is("ui-state-default ui-selectee ui-selected"));
@@ -80,12 +71,11 @@ public class AdvancedInteractions {
 
     @Test
     public void ClickOnWebElement() throws URISyntaxException, InterruptedException {
-
-        driver.get(Paths.get(resource_selectable.toURI()).toString());
-        WebElement one = driver.findElement(By.name("one"));
-        WebElement eleven = driver.findElement(By.name("eleven"));
-        WebElement five = driver.findElement(By.name("five"));
-        Actions builder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/selectable.html").toString());
+        WebElement one = fireforDriver.findElement(By.name("one"));
+        WebElement eleven = fireforDriver.findElement(By.name("eleven"));
+        WebElement five = fireforDriver.findElement(By.name("five"));
+        Actions builder = new Actions(fireforDriver);
 
         builder.click(one);
         builder.build().perform();
@@ -102,9 +92,9 @@ public class AdvancedInteractions {
 
     @Test
     public void clickHoldAndReleaseIt() throws URISyntaxException, InterruptedException {
-        driver.get(Paths.get(resource_sortable.toURI()).toString());
-        WebElement three = driver.findElement(By.name("three"));
-        Actions builder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/sortable.html").toString());
+        WebElement three = fireforDriver.findElement(By.name("three"));
+        Actions builder = new Actions(fireforDriver);
         //Move tile3 to the position of tile2
         builder.moveByOffset(200, 20)
                 .clickAndHold()
@@ -121,10 +111,10 @@ public class AdvancedInteractions {
 
     @Test
     public void clickAndHoldAndReleaseOnWebElement() throws URISyntaxException, InterruptedException {
-        driver.get(Paths.get(resource_sortable.toURI()).toString());
-        WebElement three = driver.findElement(By.name("three"));
-        WebElement two = driver.findElement(By.name("two"));
-        Actions builder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/Sortable.html").toString());
+        WebElement three = fireforDriver.findElement(By.name("three"));
+        WebElement two = fireforDriver.findElement(By.name("two"));
+        Actions builder = new Actions(fireforDriver);
         //Move tile3 to the position of tile2
         builder.clickAndHold(three)
                 .release(two)
@@ -133,58 +123,58 @@ public class AdvancedInteractions {
 
     @Test
     public void dragMe () throws URISyntaxException {
-        driver.get(Paths.get(resource_drag.toURI()).toString());
-        WebElement dragMe = driver.findElement(By.id("draggable"));
-        Actions builder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/DragMe.html").toString());
+        WebElement dragMe = fireforDriver.findElement(By.id("draggable"));
+        Actions builder = new Actions(fireforDriver);
         builder.dragAndDropBy(dragMe, 300, 200).perform();
     }
 
     @Test
     public void DragAndDrop() throws URISyntaxException {
-        driver.get(Paths.get(resource_dragAndDrop.toURI()).toString());
-        WebElement src = driver.findElement(By.id("draggable"));
-        WebElement trgt = driver.findElement(By.id("droppable"));
-        Actions builder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/DragAndDrop.html").toString());
+        WebElement src = fireforDriver.findElement(By.id("draggable"));
+        WebElement trgt = fireforDriver.findElement(By.id("droppable"));
+        Actions builder = new Actions(fireforDriver);
         builder.dragAndDrop(src, trgt).perform();
     }
 
     @Test
     public void DoubleClick() throws URISyntaxException, InterruptedException {
-        driver.get(Paths.get(resource_doubleClick.toURI()).toString());
-        WebElement dblClick= driver.findElement(By.name("dblClick"));
-        Actions builderA = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/DoubleClick.html").toString());
+        WebElement dblClick= fireforDriver.findElement(By.name("dblClick"));
+        Actions builderA = new Actions(fireforDriver);
         builderA.moveToElement(dblClick).doubleClick().perform();
-        Alert alert = driver.switchTo().alert();
+        Alert alert = fireforDriver.switchTo().alert();
         String textOnAlert = alert.getText();
         assertThat(textOnAlert, is(equalTo("Double Clicked !!")));
         alert.accept();
 
         Thread.sleep(5000);
-        Actions builderB = new Actions(driver);
+        Actions builderB = new Actions(fireforDriver);
         builderB.doubleClick(dblClick).perform();
-        driver.switchTo().alert().accept();
+        fireforDriver.switchTo().alert().accept();
     }
 
     @Test
     public void ContextClick() throws URISyntaxException, InterruptedException {
-        driver.get(Paths.get(resource_contextClick.toURI()).toString());
-        WebElement contextMenu = driver.findElement(By.id("div-context"));
-        Actions builder = new Actions(driver);
+        fireforDriver.get(getClass().getResource("/ContextClick.html").toString());
+        WebElement contextMenu = fireforDriver.findElement(By.id("div-context"));
+        Actions builder = new Actions(fireforDriver);
         builder.contextClick(contextMenu)
-                .click(driver.findElement(By.name("Item 4")))
+                .click(fireforDriver.findElement(By.name("Item 4")))
                 .perform();
-        Alert alert = driver.switchTo().alert();
+        Alert alert = fireforDriver.switchTo().alert();
         String textOnAlert = alert.getText();
         assertThat(textOnAlert, is(equalTo("Item 4 Clicked")));
         alert.accept();
 
-        driver.navigate().refresh();
-        Actions builder2 = new Actions(driver);
-        builder2.moveToElement(driver.findElement(By.id("div-context"))) //after refresh cached contextMenu element was erased
+        fireforDriver.navigate().refresh();
+        Actions builder2 = new Actions(fireforDriver);
+        builder2.moveToElement(fireforDriver.findElement(By.id("div-context"))) //after refresh cached contextMenu element was erased
                 .contextClick()
-                .click(driver.findElement(By.name("Item 2")))
+                .click(fireforDriver.findElement(By.name("Item 2")))
                 .perform();
-        driver.switchTo().alert().accept();
+        fireforDriver.switchTo().alert().accept();
     }
 
     //TODO tests for keyboard actions (keyDown/keyUp/sendKeys)
