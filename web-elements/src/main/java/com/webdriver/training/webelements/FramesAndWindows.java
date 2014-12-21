@@ -1,6 +1,7 @@
 package com.webdriver.training.webelements;
 
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -80,5 +81,58 @@ public class FramesAndWindows {
         driver.switchTo().frame(driver.findElement(By.xpath("//frame[1]")));
         txt1.clear();
         txt1.sendKeys("I`m Frame One located by web element");
+    }
+
+    @Test
+    public void modalDialogs() {
+
+        WebDriver driver = new FirefoxDriver();
+        driver.get(getClass().getResource("/windows/Alerts.html").toString());
+        WebElement button = driver.findElement(By.id("simple"));
+        button.click();
+
+        //returns Alert object
+        Alert alert = driver.switchTo().alert();
+
+        //Get the Text displayed on Alert using getText() method of Alert class
+        String textOnAlert = alert.getText();
+
+        //Click OK button, by calling accept() method of Alert Class
+        alert.accept();
+
+        //Verify Alert displayed correct message to user
+        assertThat(textOnAlert, is("Hello! I am an alert box!"));
+
+        //------------------------------
+
+        button = driver.findElement(By.id("prompt"));
+        button.click();
+
+        alert = driver.switchTo().alert();
+
+        //Enter some value on Prompt by calling sendKeys() method of //Alert Class
+        alert.sendKeys("Foo");
+
+        //Click OK button, by calling accept() method of Alert Class
+        alert.accept();
+
+        //Verify Page displays message with value entered in Prompt
+        WebElement message = driver.findElement(By.id("prompt_demo"));
+        assertThat(message.getText(), is("Hello Foo! How are you today?"));
+
+        //------------------------------
+
+        button = driver.findElement(By.id("confirm"));
+        button.click();
+
+            //Get the Alert
+            alert = driver.switchTo().alert();
+
+            //Click Cancel button, by calling dismiss() method of //Alert Class
+            alert.dismiss();
+
+            //Verify Page displays correct message on Dismiss
+            message = driver.findElement(By.id("demo"));
+            assertThat(message.getText(), is("You Dismissed Alert!"));
     }
 }

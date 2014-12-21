@@ -1,0 +1,63 @@
+<html>
+<head>
+    <script type="text/javascript">
+        function showAlert()
+        {
+            alert("Hello! I am an alert box!");
+        }
+
+        function showConfirm()
+        {
+            var x;
+            var r=confirm("Press a button!");
+            if (r==true)
+            {
+                x="You Accepted Alert!";
+            }
+            else
+            {
+                x="You Dismissed Alert!";
+            }
+            document.getElementById("demo").innerHTML=x;
+        }
+
+        function showPrompt()
+        {
+            var x;
+
+            var name=prompt("Please enter your name","Harry Potter");
+
+            if (name!=null)
+            {
+                x="Hello " + name + "! How are you today?";
+                document.getElementById("prompt_demo").innerHTML=x;
+            }
+        }
+    </script>
+</head>
+<body>
+
+<input id="simple" type="button" onclick="showAlert()" value="Show alert box" />
+
+<p>Click the button to display a confirm box.</p>
+
+<button id="confirm" onclick="showConfirm()">Try it</button>
+
+<p id="demo"></p>
+
+<script type="text/javascript">
+
+</script>
+
+<p>Click the button to demonstrate the prompt box.</p>
+
+<button id="prompt" onclick="showPrompt()">Try it</button>
+
+<p id="prompt_demo"></p>
+
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>
