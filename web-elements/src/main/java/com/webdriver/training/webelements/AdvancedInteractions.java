@@ -31,7 +31,7 @@ public class AdvancedInteractions {
 
     @Test
     public void actionBuildPerform() throws URISyntaxException, InterruptedException {
-        //it does not work for firefox so used chrome instead
+        //it does not work on firefox so used chrome instead
         chromeDriver = new ChromeDriver();
         chromeDriver.get(getClass().getResource("/selectable.html").toString());
         WebElement one = chromeDriver.findElement(By.name("one"));

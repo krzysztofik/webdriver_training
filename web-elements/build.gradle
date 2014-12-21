@@ -4,5 +4,6 @@ project(":web-elements") {
     dependencies {
         compile lib.selenium_java
         compile lib.hamcrest_library
+        compile lib.junit
     }
 }
