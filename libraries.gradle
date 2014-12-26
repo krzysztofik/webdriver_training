@@ -1,6 +1,7 @@
 
 ext {
     selenium_version = '2.44.0'
+    guice_version = '4.0-beta5'
 }
 
 ext.lib = [
@@ -9,4 +10,7 @@ ext.lib = [
     hamcrest_generator: "org.hamcrest:hamcrest-generator:1.3",
     hamcrest_integration: "org.hamcrest:hamcrest-integration:1.3",
     selenium_java: "org.seleniumhq.selenium:selenium-java:${selenium_version}",
+    guice_core: "com.google.inject:guice:${guice_version}",
+    guice_multibinding: "com.google.inject.extensions:guice-multibindings:${guice_version}",
+    opencsv: "net.sf.opencsv:opencsv:2.3"
 ]

@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 
 public class FramesAndWindows {
 
-    //The WebDriver.TargetLocator interface is used to locate a given frame or window
+    //The WebDriver.TargetLocator interface is used to locate a given frames, windows or alerts
     @Test
     public void switchWindows() throws InterruptedException {
         WebDriver driver = new ChromeDriver();
@@ -125,14 +125,14 @@ public class FramesAndWindows {
         button = driver.findElement(By.id("confirm"));
         button.click();
 
-            //Get the Alert
-            alert = driver.switchTo().alert();
+        //Get the Alert
+        alert = driver.switchTo().alert();
 
-            //Click Cancel button, by calling dismiss() method of //Alert Class
-            alert.dismiss();
+        //Click Cancel button, by calling dismiss() method of //Alert Class
+        alert.dismiss();
 
-            //Verify Page displays correct message on Dismiss
-            message = driver.findElement(By.id("demo"));
-            assertThat(message.getText(), is("You Dismissed Alert!"));
+        //Verify Page displays correct message on Dismiss
+        message = driver.findElement(By.id("demo"));
+        assertThat(message.getText(), is("You Dismissed Alert!"));
     }
 }
