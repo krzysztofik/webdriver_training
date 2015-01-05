@@ -1,4 +1,6 @@
 include 'web-elements'
 
-include 'guice-framework'
+include 'guice-basics'
+
+include 'guice-advance'
 

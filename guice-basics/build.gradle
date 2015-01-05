@@ -1,9 +1,8 @@
 
-project(":guice-framework") {
+project(":guice-basics") {
 
     dependencies {
         compile lib.guice_core
-        compile lib.guice_multibinding
         compile lib.opencsv
     }
 }
